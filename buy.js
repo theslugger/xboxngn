@@ -1,5 +1,3 @@
-// 确保 pattern 匹配目标 URL
-buy = type=http-request,pattern=^https://cart.production.store-web.dynamics.com/v1.0/Cart/RequestParentalApproval\?appId=BuyNow,requires-body=1,max-size=0,binary-body-mode=0,timeout=90,script-path=https://raw.githubusercontent.com/iidamie/paga/main/xbox/buy.js,script-update-interval=0
 
 // buy.js 脚本内容
 let storedCartId = $persistentStore.read("cartId");
