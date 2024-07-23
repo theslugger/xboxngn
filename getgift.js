@@ -1,14 +1,26 @@
 // bulk_update_items.js
 let storedCartId = $persistentStore.read("cartId");
-let storedLineItemId = $persistentStore.read("lineItemID");
-let body = JSON.parse($request.body);
+let storedLineItemId = $persistentStore.read("lineItemId");
+
+// 检查请求体是否存在且不为空
+let requestBody = $request.body;
+if (!requestBody) {
+    console.log("请求体为空，不执行任何操作");
+    $done({});
+    return;  // 如果请求体为空，直接结束处理
+}
+
+let body = JSON.parse(requestBody);
 
 if (storedCartId && storedLineItemId) {
     let url = $request.url.replace(/cartId=[^&]+/, `cartId=${storedCartId}`);
+
+    // 检查是否有 items 并且数组不为空
     if (body.items && body.items.length > 0) {
         body.items[0].id = storedLineItemId;
         $notification.post("Bulk Update LineItems 请求已修改", `新 Cart ID: ${storedCartId}, 新 LineItem ID: ${storedLineItemId}`, "");
         console.log(`Bulk Update LineItems 请求已修改: Cart ID - ${storedCartId}, LineItem ID - ${storedLineItemId}`);
+
         $done({
             url: url,
             body: JSON.stringify(body)
