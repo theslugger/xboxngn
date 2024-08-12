@@ -20,6 +20,11 @@ obj.pendingRequests.forEach(request => {
     if (appID) {
         request.extendedMessage.approvalUrl = `https://www.microsoft.com/es-AR/store/apps/${appID}?ask={"fsid":"${fsid}","cid":"${cid}","src":"site"}&origin=familyapp`;
     }
+
+    // 在approvalUrl之后添加skuId，仅当它不存在时
+    if (!request.extendedMessage.skuId) {
+        request.extendedMessage.skuId = "0010";
+    }
 });
 
 // 将修改后的对象转换回JSON字符串
