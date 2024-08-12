@@ -1,17 +1,19 @@
 var body = $response.body;
-var obj = JSON.parse(body);
+var url = $request.url;
 
-// 查找特定id并修改相关字段
-obj.pendingRequests.forEach(request => {
-    if (request.id === "9NZ4144B8SJP_0010") {
-        request.extendedMessage.popupStoreUrl = "https://www.microsoft.com/store/buyboxlitev2?clientType=storewebsdk&amp;market=AR&amp;deviceFamily=mobile&amp;locale=es-AR&amp;noCanonical=true&amp;layout=modal&amp;currentTheme=light&amp;brand=GamingApp&amp;clientVersion=0.5.4&amp;ask={\"fsid\":\"9NZ4144B8SJP_0010\",\"cid\":\"8290099219422594499\",\"src\":\"site\"}";
-        request.message = "si 是否可以购买此 game (支付 &lt;b&gt;$ 2.659,00&lt;/b&gt;)?";
-        request.extendedMessage.approvalUrl = "https://www.microsoft.com/es-AR/store/apps/9NZ4144B8SJP?ask={\"fsid\":\"9NZ4144B8SJP_0010\",\"cid\":\"8290099219422594499\",\"src\":\"site\"}&origin=familyapp";
-    }
-});
+// 明确替换URL中的fsid值
+if (url.includes("9MW9469V91LM_0010")) {
+    url = url.replace("9MW9469V91LM_0010", "BNBLPQM9MZ19_0X3J");
+}
 
-// 将修改后的对象转换回JSON字符串
-$body = JSON.stringify(obj);
+// 明确替换请求体中的ProductId参数
+if (url.includes("&ProductId=9MW9469V91LM&")) {
+    url = url.replace("&ProductId=9MW9469V91LM&", "&ProductId=BNBLPQM9MZ19&");
+}
 
-// 将修改后的响应体返回给客户端
-$done({body: $body});
+// 如果需要修改响应体中的内容，可以根据实际情况添加相应的代码
+body = body.replace(/"fsid":"9MW9469V91LM_0010"/g, '"fsid":"BNBLPQM9MZ19_0X3J"');
+body = body.replace(/"ProductId":"9MW9469V91LM"/g, '"ProductId":"BNBLPQM9MZ19"');
+
+// 返回修改后的响应
+$done({body: body, url: url});
