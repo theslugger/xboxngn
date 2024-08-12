@@ -1,20 +1,16 @@
-/**
- * 此脚本用于通过正则表达式全局替换响应体中的特定字符串
- */
+var body = $response.body;
+var obj = JSON.parse(body);
 
-// 检查响应体是否存在
-if ($response.body) {
-    let body = $response.body;
+// 查找特定id并修改相关字段
+obj.pendingRequests.forEach(request => {
+    if (request.id === "9NZ4144B8SJP_0010") {
+        request.extendedMessage.popupStoreUrl = "https://www.microsoft.com/store/buyboxlitev2?clientType=storewebsdk&market=AR&deviceFamily=mobile&locale=es-AR&noCanonical=true&layout=modal&currentTheme=light&brand=GamingApp&clientVersion=0.5.4&ask={\"fsid\":\"9NZ4144B8SJP_0010\",\"cid\":\"8290099219422594499\",\"src\":\"site\"}";
+        request.message = "si 是否可以购买此 game (支付 <b>$ 2.659,00<\/b>)?";
+    }
+});
 
-    // 使用正则表达式全局替换字符串 "9P8RZ65WCKW4" 为 "9NZ4144B8SJP"
-    body = body.replace(/9P8RZ65WCKW4/g, '9NZ4144B8SJP');
+// 将修改后的对象转换回JSON字符串
+$body = JSON.stringify(obj);
 
-    // 使用正则表达式全局替换字符串 "9QKDBKVM7BMF" 为 "9SG7TNMGV3C7"
-    body = body.replace(/9QKDBKVM7BMF/g, '9SG7TNMGV3C7');
-
-    // 应用修改后的响应体
-    $done({ body });
-} else {
-    // 如果响应体不存在，直接返回原响应
-    $done({});
-}
+// 将修改后的响应体返回给客户端
+$done({body: $body});
