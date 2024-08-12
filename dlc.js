@@ -1,19 +1,23 @@
-var body = $response.body;
 var url = $request.url;
+var body = $request.body;
 
-// 明确替换URL中的fsid值
-if (url.includes("9MW9469V91LM_0010")) {
-    url = url.replace("9MW9469V91LM_0010", "BNBLPQM9MZ19_0X3J");
+// 修改 URL 中的 fsid 参数
+url = url.replace("9MW9469V91LM_0010", "BNBLPQM9MZ19_0X3J");
+
+// 检查是否需要修改查询字符串中的 JSON
+if (url.includes("buyboxlitev2") && body.includes("fsid\":\"9MW9469V91LM_0010")) {
+    // 假设查询字符串是以 JSON 格式发送的
+    var data = JSON.parse(decodeURIComponent(body));
+    if (data && data.fsid) {
+        data.fsid = data.fsid.replace("9MW9469V91LM_0010", "BNBLPQM9MZ19_0X3J");
+        // 重新编码为查询字符串
+        body = encodeURIComponent(JSON.stringify(data));
+    }
 }
 
-// 明确替换请求体中的ProductId参数
-if (url.includes("&ProductId=9MW9469V91LM&")) {
-    url = url.replace("&ProductId=9MW9469V91LM&", "&ProductId=BNBLPQM9MZ19&");
-}
+// 输出修改后的请求
+console.log("Modified URL: " + url);
+console.log("Modified Body: " + body);
 
-// 如果需要修改响应体中的内容，可以根据实际情况添加相应的代码
-body = body.replace(/"fsid":"9MW9469V91LM_0010"/g, '"fsid":"BNBLPQM9MZ19_0X3J"');
-body = body.replace(/"ProductId":"9MW9469V91LM"/g, '"ProductId":"BNBLPQM9MZ19"');
-
-// 返回修改后的响应
-$done({body: body, url: url});
+// 返回修改后的请求
+$done({url: url, body: body});
