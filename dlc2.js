@@ -15,14 +15,15 @@ obj.pendingRequests.forEach(request => {
         request.message = `si 是否可以购买此 game (支付 <b>$ ${amount},00<\/b>)?`;
     }
 
+    // 动态构建approvalUrl
+    var appID = fsid.slice(0, fsid.indexOf("_")); // 从fsid获取appID部分
+    var newApprovalUrl = `https://www.microsoft.com/es-AR/store/apps/${appID}?ask={"fsid":"${fsid}","cid":"${cid}","src":"site"}&origin=familyapp`;
+
     // 暂时删除approvalUrl
-    var temporaryApprovalUrl = request.extendedMessage.approvalUrl;
     delete request.extendedMessage.approvalUrl;
 
-    // 在popupStoreUrl之后重新添加approvalUrl
-    if (temporaryApprovalUrl) {
-        request.extendedMessage.approvalUrl = temporaryApprovalUrl;
-    }
+    // 在popupStoreUrl之后重新添加修改后的approvalUrl
+    request.extendedMessage.approvalUrl = newApprovalUrl;
 
     // 在approvalUrl之后添加skuId，仅当它不存在时
     if (!request.extendedMessage.skuId) {
