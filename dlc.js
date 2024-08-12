@@ -5,7 +5,7 @@ var obj = JSON.parse(body);
 obj.pendingRequests.forEach(request => {
     if (request.id === "9NZ4144B8SJP_0010") {
         request.extendedMessage.popupStoreUrl = "https://www.microsoft.com/store/buyboxlitev2?clientType=storewebsdk&amp;market=AR&amp;deviceFamily=mobile&amp;locale=es-AR&amp;noCanonical=true&amp;layout=modal&amp;currentTheme=light&amp;brand=GamingApp&amp;clientVersion=0.5.4&amp;ask={\"fsid\":\"9NZ4144B8SJP_0010\",\"cid\":\"8290099219422594499\",\"src\":\"site\"}";
-        request.message = si 是否可以购买此 game (支付 <b>$ 2.659,00<\/b>)?";
+        request.message = "si 是否可以购买此 game (支付 &lt;b&gt;$ 2.659,00&lt;/b&gt;)?";
         request.extendedMessage.approvalUrl = "https://www.microsoft.com/es-AR/store/apps/9NZ4144B8SJP?ask={\"fsid\":\"9NZ4144B8SJP_0010\",\"cid\":\"8290099219422594499\",\"src\":\"site\"}&origin=familyapp";
     }
 });
