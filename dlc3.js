@@ -1,17 +1,18 @@
-// 解码请求体
-var decodedBody = decodeURIComponent($request.body);
+// 解析请求体为 JSON 对象
+var body = JSON.parse($request.body);
 
-// 输出解码后的请求体，以便检查
-console.log("Decoded Body: " + decodedBody);
+// 修改 productId 和 availabilityIdd
+body.items.forEach(item => {
+    if (item.productId === "9MW9469V91LM") {
+        item.productId = "9NZ4144B8SJP";
+    }
+    if (item.availabilityIdd === "B17K7P5V96W3") {
+        item.availabilityIdd = "9SG7TNMGV3C7";
+    }
+});
 
-// 进行替换
-var modifiedBody = decodedBody.replace(/"productId":"9MW9469V91LM","skuId":"0010","availabilityId":"B17K7P5V96W3"/g, '"productId":"9NZ4144B8SJP","skuId":"0010","availabilityId":"9SG7TNMGV3C7"');
-
-// 检查修改后的内容
-console.log("Modified Body: " + modifiedBody);
-
-// 重新编码修改后的请求体
-var reencodedBody = encodeURIComponent(modifiedBody);
+// 将修改后的 JSON 对象转换回字符串形式的请求体
+var modifiedBody = JSON.stringify(body);
 
 // 完成修改
-$done({body: reencodedBody});
+$done({body: modifiedBody});
