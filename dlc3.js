@@ -4,13 +4,13 @@ if ($request.body) {
         // 将请求体解析为 JSON 对象
         var body = JSON.parse($request.body);
 
-        // 遍历 items 数组，修改 productId 和 availabilityIdd
+        // 遍历 items 数组，修改 productId 和 availabilityId
         body.items.forEach(item => {
             if (item.productId === "9MW9469V91LM") {
                 item.productId = "9NZ4144B8SJP";
             }
-            if (item.availabilityIdd === "B17K7P5V96W3") {
-                item.availabilityIdd = "9SG7TNMGV3C7";
+            if (item.availabilityId === "B17K7P5V96W3") {
+                item.availabilityId = "9SG7TNMGV3C7";
             }
         });
 
