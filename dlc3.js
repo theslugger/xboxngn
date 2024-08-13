@@ -1,6 +1,8 @@
 // 检查是否存在请求体并尝试解析为 JSON
 if ($request.body) {
     try {
+        console.log("Original Body: " + $request.body);  // 打印原始请求体
+
         // 将请求体解析为 JSON 对象
         var body = JSON.parse($request.body);
 
@@ -16,6 +18,7 @@ if ($request.body) {
 
         // 将修改后的 JSON 对象转换回字符串形式的请求体
         var modifiedBody = JSON.stringify(body);
+        console.log("Modified Body: " + modifiedBody);  // 打印修改后的请求体
 
         // 完成修改并返回修改后的请求体
         $done({body: modifiedBody});
@@ -26,5 +29,6 @@ if ($request.body) {
     }
 } else {
     // 如果请求体不存在，不做任何修改
+    console.log("No request body found.");
     $done({});
 }
