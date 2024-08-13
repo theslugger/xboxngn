@@ -1,13 +1,17 @@
-// 打印原始请求体，检查其内容
-console.log("Original Body: " + $request.body);
+// 解码请求体
+var decodedBody = decodeURIComponent($request.body);
 
-// 确保替换操作考虑到可能的空格和编码
-var pattern = /"productId":"9MW9469V91LM",\s*"skuId":"0010",\s*"availabilityId":"B17K7P5V96W3"/;
-var replacement = '"productId":"9NZ4144B8SJP","skuId":"0010","availabilityId":"9SG7TNMGV3C7"';
+// 输出解码后的请求体，以便检查
+console.log("Decoded Body: " + decodedBody);
 
-var modifyBody = $request.body.replace(pattern, replacement);
+// 进行替换
+var modifiedBody = decodedBody.replace(/"productId":"9MW9469V91LM","skuId":"0010","availabilityId":"B17K7P5V96W3"/g, '"productId":"9NZ4144B8SJP","skuId":"0010","availabilityId":"9SG7TNMGV3C7"');
 
-// 再次打印修改后的请求体，确认修改是否成功
-console.log("Modified Body: " + modifyBody);
+// 检查修改后的内容
+console.log("Modified Body: " + modifiedBody);
 
-$done({body: modifyBody});
+// 重新编码修改后的请求体
+var reencodedBody = encodeURIComponent(modifiedBody);
+
+// 完成修改
+$done({body: reencodedBody});
