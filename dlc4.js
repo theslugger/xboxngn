@@ -4,8 +4,8 @@ if ($request.body) {
 
     // 执行替换操作
     var modifiedBody = $request.body
-        .replace(/9MW9469V91LM/g, "9NZ4144B8SJP")   // 替换产品ID
-        .replace(/B17K7P5V96W3/g, "9SG7TNMGV3C7")  // 替换可用性ID
+        .replace(/9MW9469V91LM/g, "BNBLPQM9MZ19")   // 替换产品ID
+        .replace(/B17K7P5V96W3/g, "9PFTWC8MM74Z")  // 替换可用性ID
         .replace(/0010/g, "0X3J");                // 替换 SKU ID
 
     console.log("Modified Body: " + modifiedBody); // 打印修改后的请求体
