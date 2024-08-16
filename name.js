@@ -10,7 +10,11 @@ if (body) {
 
     // 检查并修改价格
     body = JSON.stringify(obj);
-    body = body.replace('"price": "$ 21.999,50"', '"price": "$ 85.00"');
+
+    // 使用正则表达式进行价格的强字符替换
+    // 这里的正则表达式考虑了可能的空格和格式差异
+    var priceRegex = /"price":\s*"\$ 21\.999,50"/;
+    body = body.replace(priceRegex, '"price": "$ 85.00"');
 
     // 重新封装修改后的响应内容并返回
     $done({body: body});
