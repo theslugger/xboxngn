@@ -11,14 +11,23 @@ if (body) {
     // 检查并修改价格
     body = JSON.stringify(obj);
 
-    // 使用正则表达式进行价格的强字符替换
-    // 这里的正则表达式考虑了可能的空格和格式差异
-    var priceRegex = /"price":\s*"\$ 21\.999,50"/;
-    body = body.replace(priceRegex, '"price": "$ 85.00"');
+    // 存储原来的价格
+    var oldPrice = obj.price;
+
+    // 直接赋予新的价格
+    obj.price = "$ 85.00";
+
+    // 将对象转回 JSON 字符串
+    body = JSON.stringify(obj);
 
     // 重新封装修改后的响应内容并返回
     $done({body: body});
+
+    // 使用 Surge 发送通知
+    $notification.post("价格修改通知", "价格已修改", "原价格: " + oldPrice + "，新价格: " + obj.price);
 } else {
     // 如果没有有效的响应体，直接返回未修改的响应
     $done({});
+    // 发送错误通知
+    $notification.post("修改失败", "响应体为空", "无法进行数据修改");
 }
